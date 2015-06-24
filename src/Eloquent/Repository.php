@@ -1,10 +1,10 @@
 <?php
 
-namespace Bosnadev\Repositories\Eloquent;
+namespace Appkr\Repository\Eloquent;
 
-use Bosnadev\Repositories\Conditions\Condition;
-use Bosnadev\Repositories\Contracts\RepositoryInterface;
-use Bosnadev\Repositories\Exceptions\RepositoryException;
+use Appkr\Repository\Conditions\Condition;
+use Appkr\Repository\Contracts\RepositoryInterface;
+use Appkr\Repository\Exceptions\RepositoryException;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -13,8 +13,6 @@ use Illuminate\Events\Dispatcher;
 
 /**
  * Class Repository
- *
- * @package Bosnadev\Repositories\Eloquent
  */
 abstract class Repository implements RepositoryInterface
 {
@@ -202,7 +200,7 @@ abstract class Repository implements RepositoryInterface
      * @param       $value
      * @param array $columns
      *
-     * @return \ \Illuminate\Database\Eloquent\Collection|null
+     * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function findAllBy($attribute, $value, $columns = ['*'])
     {

@@ -1,11 +1,9 @@
 <?php
 
-namespace Bosnadev\Repositories\Contracts;
+namespace Appkr\Repository\Contracts;
 
 /**
  * Interface RepositoryInterface
- *
- * @package Bosnadev\Repositories\Contracts
  */
 interface RepositoryInterface
 {
@@ -13,7 +11,7 @@ interface RepositoryInterface
     /**
      * Set query conditions
      *
-     * @param array|\Bosnadev\Repositories\Conditions\Condition $conditions
+     * @param array|\Appkr\Repository\Conditions\Condition $conditions
      *
      * @return $this
      */

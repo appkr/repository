@@ -1,8 +1,6 @@
 <?php
 
-namespace Bosnadev\Repositories\Conditions;
-
-use Bosnadev\Repositories\Contracts\RepositoryInterface;
+namespace Appkr\Repository\Conditions;
 
 abstract class Condition
 {
