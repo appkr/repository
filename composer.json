@@ -1,0 +1,30 @@
+{
+  "name": "appkr/repository",
+  "description": "Laravel Repositories",
+  "keywords": [
+    "laravel",
+    "repository",
+    "repositories",
+    "eloquent",
+    "database"
+  ],
+  "licence": "MIT",
+  "authors": [
+    {
+      "name": "Appkr",
+      "email": "juwonkim@me.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "illuminate/support": "5.*",
+    "illuminate/database": "5.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Appkr\\Repository\\": "src/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
