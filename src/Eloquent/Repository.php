@@ -256,22 +256,23 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
-     * Factory - new up the model and set the model property
+     * Determine if records exists
      *
-     * @return \Illuminate\Database\Eloquent\Builder
-     * @throws RepositoryException
+     * @return mixed
      */
-    protected function setModel()
+    public function exists()
     {
-        $model = $this->app->make($this->model());
+        return $this->model->exists();
+    }
 
-        if (! $model instanceof Model) {
-            throw new RepositoryException(
-                "Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model"
-            );
-        }
-
-        return $this->model = $model;
+    /**
+     * Get the count of collection
+     *
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->model->count();
     }
 
     /**
@@ -313,7 +314,7 @@ abstract class Repository implements RepositoryInterface
      *
      * @return Repository
      */
-    public function latest($column)
+    public function latest($column = 'created_at')
     {
         return $this->setOrder($column, 'desc');
     }
@@ -325,7 +326,7 @@ abstract class Repository implements RepositoryInterface
      *
      * @return Repository
      */
-    public function oldest($column)
+    public function oldest($column = 'created_at')
     {
         return $this->setOrder($column, 'asc');
     }
@@ -390,6 +391,25 @@ abstract class Repository implements RepositoryInterface
     public function getEagerLoads()
     {
         return $this->eagerLoads;
+    }
+
+    /**
+     * Factory - new up the model and set the model property
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     * @throws RepositoryException
+     */
+    protected function setModel()
+    {
+        $model = $this->app->make($this->model());
+
+        if (! $model instanceof Model) {
+            throw new RepositoryException(
+                "Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model"
+            );
+        }
+
+        return $this->model = $model;
     }
 
     /**
