@@ -149,7 +149,7 @@ abstract class Repository implements RepositoryInterface
      */
     public function delete($id)
     {
-        if (! ($model = $this->model->find($id))) {
+        if (! ($model = $this->model->findOrFail($id))) {
             return false;
         }
 
@@ -172,7 +172,7 @@ abstract class Repository implements RepositoryInterface
             ? $this->model->with($eagerLoads)
             : $this->model;
 
-        return $model->find($id, $columns);
+        return $model->findOrFail($id, $columns);
     }
 
     /**
@@ -190,7 +190,7 @@ abstract class Repository implements RepositoryInterface
             ? $this->model->with($eagerLoads)
             : $this->model;
 
-        return $model->where($attribute, '=', $value)->first($columns);
+        return $model->where($attribute, '=', $value)->firstOrFail($columns);
     }
 
     /**
@@ -256,23 +256,22 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
-     * Determine if records exists
+     * Factory - new up the model and set the model property
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
+     * @throws RepositoryException
      */
-    public function exists()
+    protected function setModel()
     {
-        return $this->model->exists();
-    }
+        $model = $this->app->make($this->model());
 
-    /**
-     * Get the count of collection
-     *
-     * @return mixed
-     */
-    public function count()
-    {
-        return $this->model->count();
+        if (! $model instanceof Model) {
+            throw new RepositoryException(
+                "Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model"
+            );
+        }
+
+        return $this->model = $model;
     }
 
     /**
@@ -326,7 +325,7 @@ abstract class Repository implements RepositoryInterface
      *
      * @return Repository
      */
-    public function oldest($column = 'created_at')
+    public function oldest($column)
     {
         return $this->setOrder($column, 'asc');
     }
@@ -391,25 +390,6 @@ abstract class Repository implements RepositoryInterface
     public function getEagerLoads()
     {
         return $this->eagerLoads;
-    }
-
-    /**
-     * Factory - new up the model and set the model property
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     * @throws RepositoryException
-     */
-    protected function setModel()
-    {
-        $model = $this->app->make($this->model());
-
-        if (! $model instanceof Model) {
-            throw new RepositoryException(
-                "Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model"
-            );
-        }
-
-        return $this->model = $model;
     }
 
     /**
